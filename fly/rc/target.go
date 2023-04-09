@@ -357,6 +357,18 @@ func (t *target) Team() concourse.Team {
 	return t.client.Team(t.teamName)
 }
 
+func (t *target) ListTeams() ([]string, error) {
+	teamNames := []string{}
+	teams, err := t.client.ListTeams()
+	if err != nil {
+		return teamNames, err
+	}
+	for _, teamName := range teams {
+		teamNames = append(teamNames, teamName.Name)
+	}
+	return teamNames, nil
+}
+
 func (t *target) FindTeam(teamName string) (concourse.Team, error) {
 	return t.client.FindTeam(teamName)
 }
